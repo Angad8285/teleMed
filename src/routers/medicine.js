@@ -2,9 +2,19 @@ const express = require('express')
 const router = new express.Router()
 
 router.get('/medicinehome', async (req, res) => {
-    //shows two options to either go to the medicine store or the consultation page
-    // res.json({ message: 'Telemed route, either consultation or medicine' })
-    res.status(201).send({message: "this is medicines route"})
+    try{
+        res.status(201).send({message: "this is medicines route"})
+    } catch(e){
+        res.status(400).send(e)
+    }
+})
+
+router.get('/medicines/:id', async (req, res)=>{
+    try{
+        res.status(201).send({message: "search medicine by id"})
+    } catch(e) {
+        res.status(400).send(e)
+    }
 })
 
 module.exports = router
