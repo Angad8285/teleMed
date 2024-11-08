@@ -1,17 +1,17 @@
-require('./db/mongoose')
 const express = require("express");
-const telemedRoute = require("./routes/telemedRoute");
-const port= process.env.PORT || 3000
+require('./db/mongoose')
+const userRouter = require("./routers/user")
+const doctorRouter = require("./routers/doctor")
+const medicineRouter = require("./routers/medicine")
 
 const app = express();
+const port= process.env.PORT || 3000
+
 app.use(express.json());
 
-app.use((req, res, next) => {
-  console.log(req.url, req.method, req.path);
-  next();
-});
-
-app.use("/", telemedRoute);
+app.use(userRouter)
+app.use(doctorRouter)
+app.use(medicineRouter)
 
 app.listen(port,()=>{
   console.log('Server is up on port '+ port)
