@@ -47,7 +47,22 @@ const doctorSchema = new mongoose.Schema({
     phone: {
         type: String,
         trim: true
-    }
+    },
+    availability: [{
+        day: String,
+        start_time: String,
+        end_time: String
+    }],
+    consultations: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Consultation'
+    }],
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 }, {
     timestamps: true
 })

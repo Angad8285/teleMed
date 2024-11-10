@@ -42,7 +42,17 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
         trim: true
-    }
+    },
+    consultations: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Consultation'      // reference to consultation model
+    }],
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 }, {
     timestamps: true
 })
