@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const doctorSchema = new mongoose.Schema({
     name: {
@@ -65,6 +66,40 @@ const doctorSchema = new mongoose.Schema({
     }]
 }, {
     timestamps: true
+})
+
+doctorSchema.methods.generateAuthToken = async function(){
+    const doctor = this
+    const token = jwt.sign({ _id: doctor._id.toString() }, process.env.JWT_SECRET)
+    doctor.tokens = doctor.tokens.concat({token})
+    await doctor.save()
+    return token
+}
+
+doctorSchema.statics.findByCredentials = async (email, password) => {
+    const doctor = await Doctor.findOne({ email })
+
+    if (!doctor) {
+        throw new Error('Unable to login')
+    }
+
+    const isMatch = await bcrypt.compare(password, doctor.password)
+
+    if (!isMatch) {
+        throw new Error('Unable to login')
+    }
+
+    return doctor
+}
+
+doctorSchema.pre('save', async function (next) {
+    const doctor = this
+
+    if (doctor.isModified('password')) {
+        doctor.password = await bcrypt.hash(doctor.password, 8)
+    }
+
+    next()
 })
 
 const Doctor = mongoose.model('Doctor', doctorSchema)

@@ -1,8 +1,10 @@
-const express = require("express");
+const express = require("express")
 require('./db/mongoose')
+require('dotenv').config({path: './config/dev.env'})
 const userRouter = require("./routers/user")
 const doctorRouter = require("./routers/doctor")
 const medicineRouter = require("./routers/medicine")
+
 
 const app = express();
 const port= process.env.PORT || 3000

@@ -1,41 +1,51 @@
 const express = require('express')
-const router = new express.Router()
+const doctorAuth = require('../middleware/doctorAuth')
 const User = require('../models/user')
 const Doctor = require('../models/doctor')
 const Consultation = require('../models/consultation')
 
-router.get('/doctorhome', async (req, res) => {
-    try{
-        res.status(201).send({message: "this is doctors route"})
-    } catch(e){
-        res.status(400).send(e)
-    }
-})
+const router = new express.Router()
 
+// register new doctor
 router.post('/doctors', async (req, res) => {
     const doctor = new Doctor(req.body)
 
-    try{
+    try {
         await doctor.save()
-        res.status(201).send({ message: "Create new doctor", doctor })
-    } catch(e) {
+        const token = await doctor.generateAuthToken()
+        res.status(201).send({ doctor, token })
+    } catch (e) {
         res.status(400).send(e)
     }
 })
 
+//login doctor
 router.post('/doctors/login', async (req, res)=>{
     try{
-        res.status(201).send({message: "doctor login route" })
+        const doctor = await Doctor.findByCredentials(req.body.email, req.body.password)
+        const token = await doctor.generateAuthToken()
+        res.status(200).send({doctor, token})
     } catch(e){
         res.status(400).send(e)
     }
 })
 
-router.post('/doctors/logout', async (req, res)=>{
-    try{
-        res.status(201).send({message: "doctor logout route" })
-    } catch(e){
-        res.status(400).send(e)
+//get doctor profile
+router.get('/doctors/me', doctorAuth, async (req, res) => {
+    res.send(req.doctor)
+})
+
+//logout doctor
+router.post('/doctors/logout', doctorAuth, async (req, res)=>{
+    try {
+        req.doctor.tokens = req.doctor.tokens.filter((token) => {
+            return token.token !== req.token
+        })
+
+        await req.doctor.save()
+        res.send({message: "Doctor has logged out"})
+    } catch (e) {
+        res.status(500).send()
     }
 })
 
@@ -50,36 +60,5 @@ router.get('/doctors/speciality/:speciality', async (req,res)=> {
     }
 })
 
-// Route to schedule an appointment
-router.post('/doctors/:doctorId/consultations', async (req, res) => {
-    const { doctorId } = req.params
-    const { userId, time } = req.body
-    try {
-
-        const doctor = await Doctor.findById(doctorId)
-        const user = await User.findById(userId)
-
-        if(!doctor || !user){
-            return res.status(404).send({message: "Doctor or user not found"})
-        }
-
-        if(await Consultation.findOne({userId, doctorId, time})){
-            return res.status(400).send({message: "Consultation already present"})
-        }
-
-        const consultation = new Consultation({ userId, doctorId, time })
-        await consultation.save()
-
-        // Update User to include this consultation
-        await User.findByIdAndUpdate(userId, { $push: { consultations: consultation._id } });
-
-        // Update Doctor to include this consultation
-        await Doctor.findByIdAndUpdate(doctorId, { $push: { consultations: consultation._id } });
-
-        res.status(201).send({ message: 'Consultation scheduled', consultation })
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
 
 module.exports = router
