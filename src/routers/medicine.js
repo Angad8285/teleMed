@@ -1,26 +1,41 @@
 const express = require("express");
 const router = new express.Router();
-const mongoose = require("mongoose");
-const Medicine = require("../models/medicine");
-
-
 const { MongoClient } = require("mongodb");
-const uri = "mongodb://localhost:27017";
-const client = new MongoClient(uri);
+
+// Replace with your MongoDB Atlas connection string
+const uri = "mongodb+srv://angadworks247:password44@telemedscluster0.9apec.mongodb.net/";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function findDocuments(productName) {
   try {
-    // Connect to the MongoDB server
+    // Connect to the MongoDB Atlas server
     await client.connect();
-    console.log("Connected to the database");
+    console.log("Connected to the MongoDB Atlas database");
 
-    // Access the 'testDatabase' database and the 'sample_data' collection
-    const database = client.db("testDatabase");
-    const collection = database.collection("sample_data");
+        // List all databases
+        const adminDb = client.db().admin();
+        const dbs = await adminDb.listDatabases();
+        console.log("Databases in the cluster:");
+        dbs.databases.forEach(db => console.log(`- ${db.name}`));
+    
+        // Log collections for each database
+        for (const db of dbs.databases) {
+          const database = client.db(db.name);
+          const collections = await database.listCollections().toArray();
+          console.log(`Collections in the database '${db.name}':`);
+          collections.forEach(collection => console.log(`-- ${collection.name}`));
+        }
+
+    // Access the 'test' database and the 'medicine_halved' collection
+    const database = client.db("test");
+    const collection = database.collection("medicines_halved");
 
     // Find documents with the specific product name
+    // console.log(collection);
     const query = { product_name: productName };
+    console.log("Executing query:", query);
     const documents = await collection.find(query).toArray();
+    console.log("Documents found:", documents);
 
     return documents; // Return the array of documents
   } catch (err) {
@@ -43,7 +58,7 @@ router.get("/medicinehome", async (req, res) => {
 
 // Route for searching documents
 router.get("/medicine/search", async (req, res) => {
-    console.log(req.query)
+  console.log(req.query);
   const { product_name } = req.query;
 
   if (!product_name) {
