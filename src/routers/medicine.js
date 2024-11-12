@@ -12,30 +12,28 @@ async function findDocuments(productName) {
     await client.connect();
     console.log("Connected to the MongoDB Atlas database");
 
-        // List all databases
-        const adminDb = client.db().admin();
-        const dbs = await adminDb.listDatabases();
-        console.log("Databases in the cluster:");
-        dbs.databases.forEach(db => console.log(`- ${db.name}`));
+    ///////////debugging
+        // // List all databases
+        // const adminDb = client.db().admin();
+        // const dbs = await adminDb.listDatabases();
+        // console.log("Databases in the cluster:");
+        // dbs.databases.forEach(db => console.log(`- ${db.name}`));
     
-        // Log collections for each database
-        for (const db of dbs.databases) {
-          const database = client.db(db.name);
-          const collections = await database.listCollections().toArray();
-          console.log(`Collections in the database '${db.name}':`);
-          collections.forEach(collection => console.log(`-- ${collection.name}`));
-        }
+        // // Log collections for each database
+        // for (const db of dbs.databases) {
+        //   const database = client.db(db.name);
+        //   const collections = await database.listCollections().toArray();
+        //   console.log(`Collections in the database '${db.name}':`);
+        //   collections.forEach(collection => console.log(`-- ${collection.name}`));
+        // }
 
     // Access the 'test' database and the 'medicine_halved' collection
     const database = client.db("test");
     const collection = database.collection("medicines_halved");
 
-    // Find documents with the specific product name
-    // console.log(collection);
-    const query = { product_name: productName };
-    console.log("Executing query:", query);
+
+    const query = { product_name: { $regex: productName, $options: "i" } };
     const documents = await collection.find(query).toArray();
-    console.log("Documents found:", documents);
 
     return documents; // Return the array of documents
   } catch (err) {
