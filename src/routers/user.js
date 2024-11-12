@@ -14,7 +14,7 @@ router.get('/userhome', async (req, res) => {
 
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
-
+    //register new save
     try{
         await user.save()
         res.status(201).send({ message: "Created new user", user })
@@ -24,6 +24,7 @@ router.post('/users', async (req, res) => {
 })
 
 router.post('/users/login', async (req, res)=>{
+    // login users
     try{
         res.status(201).send({message: "user login route" })
     } catch(e){

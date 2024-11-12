@@ -6,7 +6,7 @@ async function main() {
         console.log('database connection successful!')
     }
     catch (error) {
-        console.log('Unable to connect to database.')
+        console.log(error)
     }
 }
 main()
