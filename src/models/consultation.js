@@ -16,7 +16,10 @@ const consultationSchema = new mongoose.Schema({
     messages: [{
         sender: String, // "user" or "doctor"
         content: String,
-        timestamp: Date
+        timestamp: {
+            type: Date,
+            default: Date.now
+        }
     }]
 }, {
     timestamps: true

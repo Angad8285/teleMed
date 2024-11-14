@@ -87,6 +87,9 @@ router.get('/users/consultations/:doctorId', userAuth, async (req, res)=>{
     const {doctorId} = req.params
     try{
         const consultations = await Consultation.find({ userId: req.user._id, doctorId})
+        if(consultations.length == 0){
+            return res.status(404).send({message: "consultation not found"})
+        }
         res.status(200).send(consultations)
     } catch(e) {
         res.status(400).send(e)
