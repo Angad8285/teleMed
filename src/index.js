@@ -8,12 +8,18 @@ const userRouter = require("./routers/user")
 const doctorRouter = require("./routers/doctor")
 const chatRouter = require("./routers/chat")
 const medicineRouter = require("./routers/medicine")
+const jwt = require('jsonwebtoken')
+const cors = require('cors');
 
 
 const app = express();
 const server = http.createServer(app)
 const io = socketio(server)
 
+// Enable CORS for all routes
+app.use(cors({
+  origin: '*', // Replace '*' with your frontend URL in production, e.g., 'https://yourdomain.com'
+}));
 
 const publicDirectoryPath = path.join(__dirname, '../public')
 app.use(express.static(publicDirectoryPath))
@@ -31,13 +37,25 @@ io.on('connection', (socket) => {
   console.log('New Websocket connection');
 
   //join a room based on consultation ID
-  socket.on('joinRoom', ({ consultationId, user }) => {
-    console.log(`Joining Room: ${consultationId} as User: ${user}`);
-    socket.join(consultationId);
+  socket.on('joinRoom', async ({ token, consultationId, user }, callback) => {
 
-    socket.broadcast.to(consultationId).emit('message',{ sender : 'Admin', content : `${user} has joined!`, timestamp: new Date()})
+    try {
+      //verify and decode the token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      const { role, _id } = decoded
+      socket.join(consultationId)
 
-    console.log(`User joined room: ${consultationId}`);
+      //send role back to client
+      callback({ role })
+
+      socket.broadcast.to(consultationId).emit('message', { sender: 'Admin', content: `${role} has joined!`, timestamp: new Date() })
+
+      console.log(`Joining Room: ${consultationId} as User: ${user}`);
+
+    } catch (e) {
+      callback({ error: 'Invalid Token' })
+    }
+
   });
 
   socket.on('connect_error', (error) => {
@@ -46,7 +64,6 @@ io.on('connection', (socket) => {
 
   // Handle sending and broadcasting messages
   socket.on('sendMessage', ({ consultationId, sender, content }) => {
-    console.log(content)
     socket.broadcast.to(consultationId).emit('message', { sender, content, timestamp: new Date() });
   });
 

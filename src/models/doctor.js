@@ -11,14 +11,14 @@ const doctorSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true, 
+        required: true,
         unique: true,
         trim: true,
         lowercase: true,
         validate(value) {
-            if(!validator.isEmail(value)){
+            if (!validator.isEmail(value)) {
                 throw new Error('Email is invalid')
-                
+
             }
         }
     },
@@ -67,10 +67,13 @@ const doctorSchema = new mongoose.Schema({
     timestamps: true
 })
 
-doctorSchema.methods.generateAuthToken = async function(){
+doctorSchema.methods.generateAuthToken = async function () {
     const doctor = this
-    const token = jwt.sign({ _id: doctor._id.toString() }, process.env.JWT_SECRET)
-    doctor.tokens = doctor.tokens.concat({token})
+    const token = jwt.sign({
+        _id: doctor._id.toString(),
+        role: 'doctor'
+    }, process.env.JWT_SECRET)
+    doctor.tokens = doctor.tokens.concat({ token })
     await doctor.save()
     return token
 }

@@ -6,27 +6,49 @@ const messageContainer = document.getElementById('message-container')
 const messageForm = document.getElementById('send-container')
 const messageInput = document.getElementById('message-input')
 
-// When both doctor and user join a room based on consultationId
-// const user = "Tulli"
+// const token = localStorage.getItem('authToken')
+
+const token = prompt('Enter token')
 const user = prompt('Enter name')
 const consultationId = prompt('Enter consultation ID')
+let role = ''
 
-socket.emit('joinRoom', { consultationId, user }, (error) => {
-    if (error) {
-        alert(error)
+socket.emit('joinRoom', { token, consultationId, user }, (response) => {
+    if (response.error) {
+        alert(response.error)
+        return
     }
-});
-appendMessage('You joined')
 
-socket.on('message', ({ sender, content, timestamp}) => {
+    role = response.role
+    console.log(`Connected as: ${role}`)
+    appendMessage(`You joined as a ${role}`)
+});
+
+socket.on('message', ({ sender, content, timestamp }) => {
     appendMessage(`${sender}: ${content}`)
 })
 
-messageForm.addEventListener('submit', e => {
+messageForm.addEventListener('submit', async (e) => {
     e.preventDefault()
     const message = messageInput.value
     appendMessage(`You: ${message}`)
     socket.emit('sendMessage', { consultationId, sender: user, content: message })
+
+    //save the message to the room via socket.io
+    const BASE_URL = 'http://localhost:3000'
+
+    try {
+        await fetch(`${BASE_URL}/chats/${consultationId}/messages`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ sender: role, content: message })
+        });
+    } catch (error) {
+        console.log('Failed to save message to the database:', error);
+    }
+
     messageInput.value = ''
 })
 

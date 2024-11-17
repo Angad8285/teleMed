@@ -11,6 +11,7 @@ const doctorAuth = async (req, res, next) => {
             throw new Error()
         }
 
+        console.log(decoded.role)
         req.token = token
         req.doctor = doctor
         next()

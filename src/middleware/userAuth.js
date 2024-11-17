@@ -11,6 +11,7 @@ const userAuth = async (req, res, next) => {
             throw new Error()
         }
 
+        console.log(decoded.role)
         req.token = token
         req.user = user
         next()
