@@ -7,9 +7,10 @@ const messageForm = document.getElementById('send-container')
 const messageInput = document.getElementById('message-input')
 
 // const token = localStorage.getItem('authToken')
+// const user = localStorage.getItem('username')
 
-const token = prompt('Enter token')
-const user = prompt('Enter name')
+const token = prompt('Enter token') // only for testing, otherwise use localStorage to save token
+const user = prompt('Enter name') // only for testing, otherwise use localStorage to get username
 const consultationId = prompt('Enter consultation ID')
 let role = ''
 
