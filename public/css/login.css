@@ -1,0 +1,383 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fc; /* Light gray-blue background for a soft look */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #a8dadc; /* Bold blue for navbar */
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    z-index: 1000;
+}
+
+.navbar-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.navbar-links li {
+    margin-left: 20px;
+}
+
+.navbar-item {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 30px;
+    transition: background-color 0.3s, transform 0.3s ease;
+    display: inline-block;
+}
+
+/* Button Hover Effects */
+.navbar-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-links .navbar-item.consult {
+    background: linear-gradient(145deg, #ff7e5f, #feb47b);
+   /* Soft gradient for Consult */
+}
+.navbar-links .navbar-item.consult:hover {
+    background: linear-gradient(145deg, #feb47b, #ff7e5f);
+   /* Reverse gradient on hover */
+}
+
+/* Container Styles */
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px; /* Slightly more narrow for a more compact feel */
+    margin-top: 120px;
+    margin-bottom: 50px;
+}
+
+/* Headline */
+h1 {
+    color: #333;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px; /* Space between form elements */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+input {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    outline: none;
+    border: 1px solid #ddd;
+    width: 100%;
+    margin-top: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    border-color: #a8dadc; /* Blue border on focus */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Light blue shadow */
+}
+
+/* Buttons */
+button {
+    background-color: #a8dadc;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    padding: 14px 28px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full-width buttons */
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Error Message */
+.error-message {
+    color: #ff4d4d;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+/* Toggle Button Styles */
+.toggle-button {
+    color: #a8dadc;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 20px;
+}
+
+.toggle-button:hover {
+    color: #0056b3;
+}
+
+/* Footer Styling */
+.footer {
+    background-color: #a8dadc;
+    color: #fff;
+    padding: 25px 0;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+}
+
+/* Media Query for Responsiveness */
+@media (max-width: 600px) {
+    .container {
+        padding: 30px 20px;
+        margin-top: 80px; /* Less margin for smaller screens */
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    button {
+        padding: 12px 24px;
+    }
+}
+
+/* General form container */
+.form-container {
+    max-width: 400px; /* Form width */
+    margin: 50px auto; /* Center the form container */
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Form Header */
+h2 {
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px; /* Space below the header */
+}
+
+/* Input Fields */
+input {
+    width: 100%; /* Make the input fields span the full form width */
+    padding: 12px;
+    margin-bottom: 25px; /* Increased margin to give more space between inputs and buttons */
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #a8dadc; /* Blue border on focus */
+}
+
+/* Buttons */
+.form-button {
+    width: 100%; /* Full width for buttons */
+    padding: 14px;
+    font-size: 16px;
+    background-color: #a8dadc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease;
+    margin-bottom: 20px; /* Space between the button and the next element */
+}
+
+.form-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05);
+}
+
+/* Toggle Button (Sign Up/Log In Link) */
+.toggle-button {
+    background-color: transparent;
+    color: #a8dadc;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease;
+    display: inline-block;
+}
+
+/* Hover Effect for the Toggle Button */
+.toggle-button:hover {
+    background-color: #a8dadc; /* Blue background on hover */
+    color: #fff; /* White text on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Active State for the Toggle Button */
+.toggle-button:active {
+    background-color: #0056b3; /* Darker blue when clicked */
+}
+
+/* Spacing Adjustments */
+.form-container .toggle-section {
+    text-align: center;
+    margin-top: 20px; /* Add margin to separate from form */
+}
+
+/* General form container */
+.form-container {
+    max-width: 400px; /* Form width */
+    margin: 50px auto; /* Center the form container */
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Form Header */
+h2 {
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px; /* Space below the header */
+}
+
+/* Input Fields */
+input, select {
+    width: 100%; /* Make the input fields span the full form width */
+    padding: 12px;
+    margin-bottom: 25px; /* Space between inputs */
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #007bff; /* Blue border on focus */
+}
+
+/* Buttons */
+.form-button {
+    width: 100%; /* Full width for buttons */
+    padding: 14px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease;
+    margin-bottom: 20px; /* Space between the button and the next element */
+}
+
+.form-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05);
+}
+
+/* Toggle Button (Sign Up/Log In Link) */
+.toggle-button {
+    background-color: transparent;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease;
+    display: inline-block;
+}
+
+/* Hover Effect for the Toggle Button */
+.toggle-button:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: #fff; /* White text on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Active State for the Toggle Button */
+.toggle-button:active {
+    background-color: #0056b3; /* Darker blue when clicked */
+}
+
+/* Toggle Section Styles */
+.toggle-section {
+    text-align: center;
+    margin-top: 20px; /* Add margin to separate from form */
+}
+
+/* Hide specialty input for patients */
+.hide {
+    display: none;
+}
+
+/* User Type Toggle */
+select#user-type {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Doctor Specialty Section */
+#doctor-specialty-container {
+    display: none; /* Hide by default, only show for doctors */
+}
+
+/* Optional: Style for a specific input field */
+input[type="tel"] {
+    padding-left: 10px; /* Ensure numbers are padded a bit */
+}

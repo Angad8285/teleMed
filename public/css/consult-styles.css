@@ -1,0 +1,1201 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+   /* Ensure the body takes full height */
+    padding-top: 20px;
+   /* Account for navbar height and extra padding */
+}
+/* Navbar Styles */
+.navbar {
+    background-color: #a8dadc;
+   /* Soft pastel blue */
+    padding: 20px 0;
+   /* Vertical padding for a bigger navbar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+   /* Subtle shadow for depth */
+    z-index: 1000;
+    border-bottom: 2px solid #f4f4f9;
+   /* Light border */
+}
+.navbar-container {
+    max-width: 1000px;
+   /* Align with the container */
+    margin: 0 auto;
+   /* Center navbar */
+    padding: 0 20px;
+   /* Horizontal padding */
+}
+.navbar-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+   /* Align the buttons to the right */
+    width: 100%;
+}
+.navbar-links li {
+    margin-left: 20px;
+   /* Space between buttons */
+}
+.navbar-item {
+    text-decoration: none;
+    color: #fff;
+   /* White text for contrast */
+    font-size: 16px;
+   /* Slightly larger font size */
+    font-weight: bold;
+    padding: 15px 25px;
+   /* Button padding */
+    border-radius: 30px;
+   /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s ease, box-shadow 0.3s;
+    display: inline-block;
+}
+/* Button Styles */
+.navbar-links .navbar-item.consult {
+    background: linear-gradient(145deg, #ff7e5f, #feb47b);
+   /* Soft gradient for Consult */
+}
+.navbar-links .navbar-item.login {
+    background: linear-gradient(145deg, #6a11cb, #2575fc);
+   /* Soft gradient for Login */
+}
+/* Hover Effects */
+.navbar-item:hover {
+    transform: scale(1.05);
+   /* Slightly enlarge button */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+   /* Subtle shadow on hover */
+}
+/* Hover Effects for Consult and Login buttons */
+.navbar-links .navbar-item.consult:hover {
+    background: linear-gradient(145deg, #feb47b, #ff7e5f);
+   /* Reverse gradient on hover */
+}
+.navbar-links .navbar-item.login:hover {
+    background: linear-gradient(145deg, #2575fc, #6a11cb);
+   /* Reverse gradient on hover */
+}
+.navbar-links .navbar-item.user {
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+/* Modal Styles */
+/* Modal Styling */
+.modal {
+    display: none;
+   /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+   /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+   /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    max-width: 80%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+#userModal {
+    display: none;
+   /* Hidden by default */
+    position: fixed;
+    z-index: 999;
+   /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+   /* Full width */
+    height: 100%;
+   /* Full height */
+    background-color: rgba(0, 0, 0, 0.5);
+   /* Black background with transparency */
+    overflow: auto;
+   /* Enable scrolling if the modal content overflows */
+    padding-top: 100px;
+   /* Space from top */
+    backdrop-filter: blur(10px);
+   /* Apply blur to the content behind modal */
+    pointer-events: auto;
+   /* Ensure modal can be interacted with */
+}
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+/* Close button hover effect */
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Modal Content Styling */
+.modal-content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+.modal-content p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+.modal-content .user-detail {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 12px;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+/* Modal Header Styling */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+.modal-header h2 {
+    margin: 0;
+}
+/* User Icon Styling */
+#userIcon {
+    display: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+/* Hover effect on user icon */
+#userIcon:hover {
+    color: #007bff;
+}
+/* Animation for Modal Fade In */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+   }
+    to {
+        opacity: 1;
+   }
+}
+/* Main container */
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 12px;
+   /* Rounded corners */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1450px;
+    margin-top: 120px;
+   /* Increased gap between navbar and search form */
+    margin-bottom: 50px;
+   /* Add space at the bottom to keep footer off content */
+}
+/* Headline */
+h1 {
+    color: #333;
+    padding-bottom: 20px;
+    font-size: 36px;
+    font-weight: bold;
+}
+/* Search Input and Button Styling */
+input, select, button {
+    box-shadow: none;
+   /* Ensure no shadow is applied here */
+}
+/* Search bar and dropdown styling */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+    gap: 10px;
+   /* Adds space between dropdown, search input, and button */
+}
+select, input, button {
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 25px;
+    outline: none;
+    border: 1px solid #ddd;
+   /* Light border for inputs and dropdown */
+}
+select {
+    width: 150px;
+   /* Fixed width for the dropdown */
+    max-width: 200px;
+}
+input {
+    width: 60%;
+   /* Adjust input width to fit with the dropdown */
+    max-width: 500px;
+   /* Keep it at a reasonable size */
+}
+button {
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 14px 28px;
+}
+/* Removing unwanted shadow for the button */
+button:hover {
+    background-color: #0056b3;
+}
+/* Optional: Add a subtle focus effect for input fields */
+input:focus, select:focus {
+    border-color: #007bff;
+   /* Blue border on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+   /* Light blue shadow */
+}
+button:hover {
+    background-color: #0056b3;
+}
+/* Result Grid */
+#result {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+   /* Always 3 items per row */
+    gap: 20px;
+    justify-items: center;
+    align-items: start;
+}
+/* Card Styling */
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 350px;
+   /* Increased max width for wider cards */
+    text-align: left;
+    transition: transform 0.3s ease;
+    margin: 10px;
+    box-sizing: border-box;
+}
+.card:hover {
+    transform: translateY(-10px);
+}
+.card .card-image {
+    width: 100%;
+   /* Make the image fill the width of the card */
+    max-height: 200px;
+    height: 200px;
+   /* Set a fixed height for the image */
+    object-fit: cover;
+   /* Ensures the image covers the box without distortion */
+    border-radius: 10px;
+   /* Rounded corners for the image */
+    margin-bottom: 15px;
+   /* Space between the image and the text */
+}
+.card h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    color: #333;
+}
+.card p {
+    font-size: 14px;
+    color: #666;
+}
+.card .price {
+    font-weight: bold;
+    color: #007bff;
+}
+/* Footer Styling */
+.footer {
+    background-color: #a8dadc;
+   /* Soft pastel blue to match navbar */
+    color: #fff;
+    padding: 25px 0;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+   /* Subtle shadow */
+    margin-top: auto;
+    z-index: 9998;
+   /* Ensure footer stays above modal */
+}
+/* Footer Links (optional) */
+.footer a {
+    text-decoration: none;
+    color: #fff;
+    margin-left: 10px;
+}
+.footer a:hover {
+    text-decoration: underline;
+}
+/* Overall layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+   /* Ensures other elements are positioned normally */
+}
+/* Main content area */
+.container {
+    padding: 20px;
+    position: relative;
+   /* Ensures content is properly positioned */
+    z-index: 1;
+   /* Make sure it's under the side panel */
+}
+/* Overlay Side Panel Styling */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: #f4f4f9;
+    box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+   /* Ensures the side panel is above the main content */
+    display: none;
+   /* Initially hidden */
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+   /* Initially off-screen */
+}
+.side-panel.active {
+    display: block;
+    transform: translateX(0);
+   /* Slide in from the right */
+}
+.side-panel h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+.side-panel ul {
+    list-style-type: none;
+    padding: 0;
+}
+.side-panel li {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.side-panel li p {
+    font-size: 14px;
+    color: #555;
+}
+/* Styling for search bar and results */
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+#searchBar {
+    width: 60%;
+    padding: 10px;
+    margin-right: 10px;
+}
+select {
+    width: 30%;
+    padding: 10px;
+}
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+/* Doctor card styling */
+.card {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+}
+.card h3 {
+    font-size: 20px;
+    color: #333;
+}
+.card p {
+    color: #555;
+}
+.card .price {
+    font-weight: bold;
+}
+/* Overall layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+   /* Ensures other elements are positioned normally */
+}
+/* Main content area */
+.container {
+    padding: 20px;
+    position: relative;
+   /* Ensures content is properly positioned */
+    z-index: 1;
+   /* Make sure it's under the side panel */
+}
+/* Align search bar, select, search button, and show consultation button in one row */
+.search-container {
+    display: flex;
+    justify-content: space-between;
+   /* Spread out the items */
+    gap: 15px;
+   /* Space between items */
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+   /* Allow items to wrap in case the screen size is small */
+}
+/* Search bar */
+#searchBar {
+    width: 45%;
+    padding: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+/* Specialty select dropdown */
+select {
+    width: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+/* Buttons */
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+/* Adjust button width */
+button {
+    width: 20%;
+   /* Make the buttons smaller and aligned with the other inputs */
+}
+/* Buttons on hover */
+button:hover {
+    background-color: #0056b3;
+}
+/* Overlay Side Panel Styling */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: #f4f4f9;
+    box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+   /* Ensures the side panel is above the main content */
+    display: none;
+   /* Initially hidden */
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+   /* Initially off-screen */
+}
+.side-panel.active {
+    display: block;
+    transform: translateX(0);
+   /* Slide in from the right */
+}
+.side-panel h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+.side-panel ul {
+    list-style-type: none;
+    padding: 0;
+}
+.side-panel li {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.side-panel li p {
+    font-size: 14px;
+    color: #555;
+}
+/* Doctor card styling */
+.card {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+}
+.card h3 {
+    font-size: 20px;
+    color: #333;
+}
+.card p {
+    color: #555;
+}
+.card .price {
+    font-weight: bold;
+}
+/* Overall layout */
+/* Overall layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+/* Main content area */
+.container {
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+/* Align search bar, select, search button, and show consultation button in one row */
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+/* Search bar */
+#searchBar {
+    width: 45%;
+    padding: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+/* Specialty select dropdown */
+select {
+    width: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+/* Buttons */
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+/* Adjust button width */
+button {
+    width: 20%;
+}
+/* Buttons on hover */
+button:hover {
+    background-color: #0056b3;
+}
+/* Overlay Side Panel Styling */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: #f4f4f9;
+    box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+   /* Ensure it’s above the main content */
+    display: none;
+   /* Initially hidden */
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+   /* Initially off-screen */
+}
+/* Active side panel (when shown) */
+.side-panel.active {
+    display: block;
+    transform: translateX(0);
+   /* Slide in from the right */
+}
+.side-panel h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+/* List of consultations */
+.side-panel ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 60px;
+   /* Create space for the Close button */
+}
+/* Consultation items */
+.side-panel li {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+/* Text inside the consultation items */
+.side-panel li p {
+    font-size: 14px;
+    color: #555;
+}
+/* Close button at the bottom of the side panel */
+.side-panel button {
+    position: absolute;
+    bottom: 20px;
+   /* Position it at the bottom of the panel */
+    left: 50%;
+    transform: translateX(-50%);
+   /* Center the button horizontally */
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+/* Close button hover effect */
+.side-panel button:hover {
+    background-color: #c82333;
+}
+/* Doctor card styling */
+.card {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+}
+.card h3 {
+    font-size: 20px;
+    color: #333;
+}
+.card p {
+    color: #555;
+}
+.card .price {
+    font-weight: bold;
+}
+/* Overall layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+/* Main content area */
+.container {
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+/* Align search bar, select, search button, and show consultation button in one row */
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+/* Search bar */
+#searchBar {
+    width: 45%;
+    padding: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+/* Specialty select dropdown */
+select {
+    width: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+/* Buttons */
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+/* Adjust button width */
+button {
+    width: 20%;
+}
+/* Buttons on hover */
+button:hover {
+    background-color: #0056b3;
+}
+/* Overlay Side Panel Styling */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+   /* Make side panel full height */
+    background-color: #f4f4f9;
+    box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+   /* Ensure it’s above the main content */
+    display: none;
+   /* Initially hidden */
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+   /* Initially off-screen */
+}
+/* Active side panel (when shown) */
+.side-panel.active {
+    display: block;
+    transform: translateX(0);
+   /* Slide in from the right */
+}
+.side-panel h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+/* List of consultations */
+.side-panel ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 40px;
+   /* Create space for the Close button */
+    max-height: calc(100vh - 100px);
+   /* Prevent overflow by limiting height */
+    overflow-y: auto;
+   /* Allow scrolling if content is too long */
+}
+/* Consultation items */
+.side-panel li {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+/* Text inside the consultation items */
+.side-panel li p {
+    font-size: 14px;
+    color: #555;
+}
+/* Close button at the bottom of the side panel */
+.side-panel button.close-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+}
+/* Close button hover effect */
+.side-panel button.close-btn:hover {
+    background-color: #c82333;
+}
+/* Doctor card styling */
+.card {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+}
+.card h3 {
+    font-size: 20px;
+    color: #333;
+}
+.card p {
+    color: #555;
+}
+.card .price {
+    font-weight: bold;
+}
+/* Overall layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+/* Main content area */
+.container {
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+/* Align search bar, select, search button, and show consultation button in one row */
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+/* Search bar */
+#searchBar {
+    width: 45%;
+    padding: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+/* Specialty select dropdown */
+select {
+    width: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+/* Buttons */
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+/* Adjust button width */
+button {
+    width: 20%;
+}
+/* 
+/* Side panel for previous consultations */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: none;
+   /* Initially hidden */
+    transition: transform 0.3s ease;
+    transform: translateX(100%);
+    overflow-y: auto;
+   /* Allow scrolling inside */
+}
+.side-panel.active {
+    transform: translateX(0);
+   /* Slide in */
+}
+/* List of consultations */
+#consultationsList {
+    list-style-type: none;
+    padding: 0;
+}
+.consultation-card {
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 10px;
+    cursor: pointer;
+}
+.consultation-card:hover {
+    background-color: #f0f0f0;
+}
+/* Chat history section */
+.chat-history-section {
+    margin-top: 20px;
+    display: none;
+   /* Initially hidden */
+}
+#chatHistoryContent {
+    max-height: 400px;
+    overflow-y: auto;
+}
+/* Side panel for previous consultations */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: none;
+   /* Initially hidden */
+    transition: transform 0.3s ease;
+    transform: translateX(100%);
+    overflow-y: auto;
+   /* Allow scrolling inside */
+}
+.side-panel.active {
+    transform: translateX(0);
+   /* Slide in */
+}
+/* List of consultations */
+#consultationsList {
+    list-style-type: none;
+    padding: 0;
+}
+.consultation-card {
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 10px;
+    cursor: pointer;
+}
+.consultation-card:hover {
+    background-color: #f0f0f0;
+}
+/* Chat History Popup */
+.chat-history-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+   /* Transparent background */
+    display: none;
+   /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+   /* Ensure it's on top of other elements */
+}
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 70%;
+    max-width: 600px;
+    max-height: 80%;
+    overflow-y: auto;
+   /* Allow scrolling in case of long chat history */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+/* Style for chat history content */
+#chatHistoryContent {
+    max-height: 400px;
+    overflow-y: auto;
+}
+/* Optional: Add transition effects for showing/hiding the popup */
+.chat-history-popup {
+    transition: opacity 0.3s ease;
+}
+.chat-history-popup.show {
+    display: flex;
+    opacity: 1;
+}
+/* Doctor Description Popup */
+.doctor-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+   /* Transparent background */
+    display: none;
+   /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    transition: opacity 0.3s ease;
+}
+/* Show the popup by changing the display to flex */
+.doctor-popup.show {
+    display: flex;
+    opacity: 1;
+}
+/* Popup content container */
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 70%;
+    max-width: 600px;
+    max-height: 80%;
+    overflow-y: auto;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+/* Close button */
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Popup Styles */
+.doctor-popup {
+    display: none;  /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);  /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    background: #fff;
+    border-radius: 8px;
+    width: 60%;  /* Adjust width as needed */
+    max-width: 800px;
+    padding: 20px;
+    position: relative;
+    overflow-y: auto; /* Allow scrolling if the content is too long */
+}
+
+/* Close button */
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    color: #333;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.close-popup:hover {
+    color: red;
+}
+
+/* Doctor details section */
+.doctor-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.doctor-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;  /* Space between image and text */
+}
+
+.doctor-header div {
+    max-width: 400px;  /* Prevent text from overflowing */
+}
+
+h3 {
+    margin: 0;
+    font-size: 24px;
+}
+
+p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+/* Appointment time dropdown */
+#appointmentTime {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Book Appointment Button */
+#bookAppointment {
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#bookAppointment:hover {
+    background-color: #0056b3;
+}
+
+/* Center the whole popup */
+#doctorPopup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-container">
+            <ul class="navbar-links">
+                <li><a href="index.html" class="navbar-item consult">Search Medicine</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="container" id="formContainer">
+        <h1 id="formHeader">Login</h1>
+        <form id="loginForm" class="form">
+            <div class="form-group">
+                <label for="username">E-mail</label>
+                <input type="text" id="username" name="username" placeholder="Enter your e-mail" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <!-- Sign Up Button -->
+            <button type="submit" class="login-button">Login</button>
+        </form>
+
+        <!-- Sign Up Form (hidden initially) -->
+        <form id="signupForm" class="form" style="display: none;">
+            <div class="form-group">
+                <label for="newUsername">Username</label>
+                <input type="text" id="newUsername" name="newUsername" placeholder="Create a username" required>
+            </div>
+            <div class="form-group">
+                <label for="newPassword">Password</label>
+                <input type="password" id="newPassword" name="newPassword" placeholder="Create a password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+            </div>
+            <div class="form-group">
+                <label for="Age">Age</label>
+                <input type="text" id="Age" name="Age" placeholder="Enter your age" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="userType">Are you a patient or doctor?</label>
+                <select id="userType" name="userType" required>
+                    <option value="">Select</option>
+                    <option value="patient">Patient</option>
+                    <option value="doctor">Doctor</option>
+                </select>
+            </div>
+
+            <!-- Doctor Specialty (dropdown hidden initially) -->
+            <div id="specialtySection" class="form-group" style="display: none;">
+                <label for="specialty">Choose Your Specialty</label>
+                <select id="specialty" name="specialty">
+                    <option value="">Select a Specialty</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="Orthopedics">Orthopedics</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                    <option value="General Surgery">General Surgery</option>
+                    <!-- Add more specialties as needed -->
+                </select>
+            </div>
+
+            <button type="submit" class="signup-button">Sign Up</button>
+        </form>
+
+        <!-- Toggle Button -->
+        <div class="toggle-section">
+            <button class="toggle-button" id="toggleButton">Don't have an account? Sign up</button>
+        </div>        
+        
+        <p class="error-message" id="errorMessage"></p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Your Website. All Rights Reserved.</p>
+        <p>Created with ❤️ by Your Name</p>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

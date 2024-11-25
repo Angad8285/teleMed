@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Consult Doctors</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- For FontAwesome icons -->
+    </head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <ul class="navbar-links">
+                <li><a href="consult.html" class="navbar-item consult">Consult</a></li>
+                <li>
+                    <!-- Login Button -->
+                    <a href="login.html" class="navbar-item login" id="loginButton">Login</a>
+                    <!-- User Icon (replaces Login button when logged in) -->
+                    <a href="#" id="userIcon" style="display:none;" class="navbar-item">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Search Medicines</h1>
+        <div class="search-container">
+            <input type="text" id="searchBar" placeholder="Search any medicine">
+            <button onclick="filterMedicines()">Search</button>
+        </div>
+        <div id="result"></div>
+    </div>
+    <div id="userModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>User Details</h2>
+            <p><strong>Username:</strong> <span id="username"></span></p>
+            <p><strong>Full Name:</strong> <span id="fullName"></span></p>
+            <p><strong>Phone:</strong> <span id="phone"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+    <!-- Footer -->
+<div class="footer">
+    <p>&copy; 2024 Your Company. All rights reserved.</p>
+    <p>Created with ❤️ by Your Name</p>
+</div>
+
+</body>
+</html>
