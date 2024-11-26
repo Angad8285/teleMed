@@ -84,8 +84,8 @@ router.get('/doctors/search', async (req, res) => {
 
 
 //route to get available slots for a doctor
-router.get('/doctors/:doctorId/available-slots', async (req, res) => {
-    const { doctorId } = req.params;
+router.get('/doctors/available-slots', async (req, res) => {
+    const { doctorId } = req.query;
 
     try {
         // Fetch doctor's availability

@@ -34,25 +34,25 @@ let testUserData = {
 };
 
 // List of doctors (simulating data you might fetch from a backend)
-// const doctors = [{
-//     name: "Dr. John Doe",
-//     specialty: "Cardiologist",
-//     description: "Dr. John Doe is a renowned Cardiologist specializing in heart diseases.",
-//     availableTimes: ["9:00 AM", "11:00 AM", "1:00 PM", "3:00 PM"]
-// },
-// {
-//     name: "Dr. Jane Smith",
-//     specialty: "Dermatologist",
-//     description: "Dr. Jane Smith is a skilled Dermatologist known for her expertise in skin treatments.",
-//     availableTimes: ["10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM"]
-// },
-// {
-//     name: "Dr. Emily White",
-//     specialty: "Pediatrician",
-//     description: "Dr. Emily White is a trusted Pediatrician with years of experience in child healthcare.",
-//     availableTimes: ["8:00 AM", "10:00 AM", "12:00 PM", "2:00 PM"]
-// }
-// ];
+const doctors = [{
+    name: "Dr. John Doe",
+    specialty: "Cardiologist",
+    description: "Dr. John Doe is a renowned Cardiologist specializing in heart diseases.",
+    availableTimes: ["9:00 AM", "11:00 AM", "1:00 PM", "3:00 PM"]
+},
+{
+    name: "Dr. Jane Smith",
+    specialty: "Dermatologist",
+    description: "Dr. Jane Smith is a skilled Dermatologist known for her expertise in skin treatments.",
+    availableTimes: ["10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM"]
+},
+{
+    name: "Dr. Emily White",
+    specialty: "Pediatrician",
+    description: "Dr. Emily White is a trusted Pediatrician with years of experience in child healthcare.",
+    availableTimes: ["8:00 AM", "10:00 AM", "12:00 PM", "2:00 PM"]
+}
+];
 
 // Function to display doctors in the results
 function displayDoctors(filteredDoctors) {
@@ -202,61 +202,61 @@ window.onclick = function (event) {
 };
 
 // Simulated Previous Consultations Data
-const previousConsultations = [{
-    doctor: "Dr. John Doe",
-    specialty: "Cardiologist",
-    date: "2024-10-10",
-    fee: "$100"
-},
-{
-    doctor: "Dr. Jane Smith",
-    specialty: "Dermatologist",
-    date: "2024-09-20",
-    fee: "$80"
-},
-{
-    doctor: "Dr. Michael Brown",
-    specialty: "Neurologist",
-    date: "2024-08-15",
-    fee: "$150"
-},
-{
-    doctor: "Dr. John Doe",
-    specialty: "Cardiologist",
-    date: "2024-10-10",
-    fee: "$100"
-},
-{
-    doctor: "Dr. Jane Smith",
-    specialty: "Dermatologist",
-    date: "2024-09-20",
-    fee: "$80"
-},
-{
-    doctor: "Dr. Michael Brown",
-    specialty: "Neurologist",
-    date: "2024-08-15",
-    fee: "$150"
-},
-];
+// const previousConsultations = [{
+//     doctor: "Dr. John Doe",
+//     specialty: "Cardiologist",
+//     date: "2024-10-10",
+//     fee: "$100"
+// },
+// {
+//     doctor: "Dr. Jane Smith",
+//     specialty: "Dermatologist",
+//     date: "2024-09-20",
+//     fee: "$80"
+// },
+// {
+//     doctor: "Dr. Michael Brown",
+//     specialty: "Neurologist",
+//     date: "2024-08-15",
+//     fee: "$150"
+// },
+// {
+//     doctor: "Dr. John Doe",
+//     specialty: "Cardiologist",
+//     date: "2024-10-10",
+//     fee: "$100"
+// },
+// {
+//     doctor: "Dr. Jane Smith",
+//     specialty: "Dermatologist",
+//     date: "2024-09-20",
+//     fee: "$80"
+// },
+// {
+//     doctor: "Dr. Michael Brown",
+//     specialty: "Neurologist",
+//     date: "2024-08-15",
+//     fee: "$150"
+// },
+// ];
 
-// Function to show previous consultations in the side panel
-function showPreviousConsultations() {
-    const consultationsList = document.getElementById('consultationsList');
-    consultationsList.innerHTML = ''; // Clear previous consultations
+// // Function to show previous consultations in the side panel
+// function showPreviousConsultations() {
+//     const consultationsList = document.getElementById('consultationsList');
+//     consultationsList.innerHTML = ''; // Clear previous consultations
 
-    previousConsultations.forEach(consultation => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <h4>${consultation.doctor}</h4>
-            <p>Date: ${consultation.date}</p>
-        `;
-        consultationsList.appendChild(li);
-    });
-}
+//     previousConsultations.forEach(consultation => {
+//         const li = document.createElement('li');
+//         li.innerHTML = `
+//             <h4>${consultation.doctor}</h4>
+//             <p>Date: ${consultation.date}</p>
+//         `;
+//         consultationsList.appendChild(li);
+//     });
+// }
 
-// Call the function to display previous consultations
-showPreviousConsultations();
+// // Call the function to display previous consultations
+// showPreviousConsultations();
 
 // Function to toggle the visibility of the side panel
 // Toggle the side panel visibility
@@ -318,18 +318,47 @@ const consultations = [{
 ];
 
 // Function to display consultations in the side panel
-function displayConsultations() {
+let previousConsultations = []
+
+async function displayConsultations() {
     const consultationsList = document.getElementById('consultationsList');
     consultationsList.innerHTML = ""; // Clear previous list
 
-    consultations.forEach((consultation) => {
+    const userId = JSON.parse(localStorage.getItem('userDetails'))._id
+
+    try {
+        const params = new URLSearchParams({
+            userId
+        }).toString();
+
+        const endpoint = `http://localhost:3000/consultations/previous?${params}`
+
+        const response = await fetch(endpoint, {
+            method: 'GET', // Change to POST if using req.body on the server
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`API Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        previousConsultations = data.previousConsultations
+
+    } catch (e) {
+        console.log(e)
+    }
+
+    previousConsultations.forEach((consultation) => {
         const card = document.createElement('li');
         card.classList.add('consultation-card');
         card.innerHTML = `
-            <h4>${consultation.doctor} - ${consultation.specialty}</h4>
-            <p>Date: ${consultation.date}</p>
+            <h4>${consultation.doctorName}</h4>
+            <p>Date: ${consultation.consultationTime.split('T')[0]}</p>
         `;
-        card.addEventListener('click', () => showChatHistory(consultation.id)); // Add click listener
+        card.addEventListener('click', () => showChatHistory(consultation.consultationId)); // Add click listener
         consultationsList.appendChild(card);
     });
 }
@@ -337,7 +366,8 @@ function displayConsultations() {
 // Function to show the chat history popup for a selected consultation
 function showChatHistory(consultationId) {
     // Find the consultation by ID
-    const consultation = consultations.find(c => c.id === consultationId);
+    const consultation = previousConsultations.find(c => c.consultationId === consultationId);
+    console.log(consultation)
 
     // Show the chat history popup
     const chatHistoryPopup = document.getElementById('chatHistoryPopup');
@@ -348,9 +378,14 @@ function showChatHistory(consultationId) {
     chatHistoryContent.innerHTML = "";
 
     // Display the chat history
-    consultation.chatHistory.forEach(chat => {
+    consultation.messages.forEach(chat => {
         const chatMessage = document.createElement('p');
-        chatMessage.innerHTML = `<strong>${chat.time}</strong>: ${chat.message}`;
+        if (chat.sender == 'user') {
+            chatMessage.innerHTML = `<strong>Patient</strong>: ${chat.content}`;
+        }
+        else {
+            chatMessage.innerHTML = `<strong>Doctor</strong>: ${chat.content}`;
+        }
         chatHistoryContent.appendChild(chatMessage);
     });
 }
@@ -373,6 +408,7 @@ function displayDoctors(filteredDoctors) {
     resultContainer.innerHTML = "";  // Clear previous results
 
     filteredDoctors.forEach(doctor => {
+        console.log(doctor)
         const card = document.createElement('div');
         card.classList.add('card');
         card.innerHTML = `
@@ -411,7 +447,7 @@ async function filterDoctors() {
                 'Content-Type': 'application/json'
             }
         });
-        
+
         if (!response.ok) {
             throw new Error(`API Error: ${response.statusText}`);
         }
@@ -431,32 +467,59 @@ async function filterDoctors() {
 }
 
 // Function to open the doctor's details popup
-function openDoctorPopup(doctor) {
+async function openDoctorPopup(doctor) {
     // Get the popup elements
     const doctorPopup = document.getElementById('doctorPopup');
     const doctorName = document.getElementById('doctorName');
     const doctorSpecialty = document.getElementById('doctorSpecialty');
-    // const doctorDescription = document.getElementById('doctorDescription');
-    // const appointmentTime = document.getElementById('appointmentTime');
+    const appointmentTime = document.getElementById('appointmentTime');
 
     // Set the popup content
     doctorName.textContent = doctor.name;
     doctorSpecialty.textContent = doctor.specialization;
-    // doctorDescription.textContent = doctor.description;
+    var availableTimes = []
+
+    try {
+        const params = new URLSearchParams({
+            doctorId: doctor._id
+        }).toString()
+
+        const endpoint = `http://localhost:3000/doctors/available-slots?${params}`
+
+        const response = await fetch(endpoint, {
+            method: 'GET', // Change to POST if using req.body on the server
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`API Error: ${response.statusText}`);
+        }
+
+        availableTimes = await response.json();
+
+    } catch (e) {
+        alert(e)
+    }
 
     // Clear previous available times
-    // appointmentTime.innerHTML = "";
+    appointmentTime.innerHTML = "";
 
     // Populate the dropdown with available appointment times
-    // doctor.availableTimes.forEach(time => {
-    //     const option = document.createElement('option');
-    //     option.value = time;
-    //     option.textContent = time;
-    //     appointmentTime.appendChild(option);
-    // });
+    availableTimes.forEach(time => {
+        const option = document.createElement('option');
+        option.value = time;
+        option.textContent = time;
+        appointmentTime.appendChild(option);
+    });
 
     // Show the popup
     doctorPopup.style.display = 'flex';
+
+    document.getElementById('bookAppointment').addEventListener('click', () => {
+        bookAppointment(doctor._id)
+    });
 }
 
 // Close the doctor's popup when the close button is clicked
@@ -464,6 +527,51 @@ document.getElementById('closeDoctorPopup').addEventListener('click', () => {
     const doctorPopup = document.getElementById('doctorPopup');
     doctorPopup.style.display = 'none';
 });
+
+async function bookAppointment(doctorId) {
+    // Get selected appointment time
+    const appointmentTimeDropdown = document.getElementById('appointmentTime');
+    const selectedTime = appointmentTimeDropdown.value;
+
+    if (!selectedTime) {
+        alert('Please select an appointment time.');
+        return;
+    }
+
+    // Get the auth token from local storage
+    const authToken = localStorage.getItem('authToken');
+
+    if (!authToken) {
+        alert('You must be logged in to book an appointment.');
+        return;
+    }
+
+    try {
+        // Prepare the API request
+        const endpoint = `http://localhost:3000/users/${doctorId}/consultations`;
+
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${authToken}`,
+            },
+            body: JSON.stringify({ time: selectedTime }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to book the appointment.');
+        }
+
+        // Handle successful booking
+        alert('Appointment booked successfully!');
+        window.location.reload(); // Refresh the page
+    } catch (error) {
+        console.error('Error booking appointment:', error.message);
+        alert(`Failed to book appointment: ${error.message}`);
+    }
+}
 
 // Close the doctor's popup if the user clicks outside of it
 // window.onclick = function(event) {

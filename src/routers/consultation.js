@@ -62,7 +62,7 @@ router.get('/consultations/previous', async (req, res) => {
         };
 
         // Fetch previous consultations
-        const previousConsultations = await Consultation.find(query, 'time _id doctorId')
+        const previousConsultations = await Consultation.find(query, 'time _id doctorId messages')
             .sort({ time: -1 }) // Sort by time in descending order
             .exec();
 
@@ -70,9 +70,11 @@ router.get('/consultations/previous', async (req, res) => {
         const consultationsWithIST = await Promise.all(
             previousConsultations.map(async (consultation) => {
                 const doctor = await Doctor.findOne({ _id: consultation.doctorId }, 'name').exec();
+                console.log(consultation)
                 return {
                     doctorName: doctor ? doctor.name : 'Unknown Doctor',
                     consultationId: consultation._id,
+                    messages: consultation.messages,
                     consultationTime: convertToIST(consultation.time),
                 };
             })
