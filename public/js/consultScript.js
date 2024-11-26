@@ -75,10 +75,12 @@ function checkLoginStatus() {
     fetchLoginStatus().then(isLoggedIn => {
         const loginButton = document.getElementById('loginButton');
         const userIcon = document.getElementById('userIcon');
+        const pendingButton = document.getElementById('pendingButton');
 
         if (isLoggedIn) {
             loginButton.style.display = 'none'; // Hide login button
             userIcon.style.display = 'inline-block'; // Show user icon
+            pendingButton.style.display = 'inline-block'; // Show user icon
             fetchAndStoreUserData(); // Fetch and store user details when logged in
         } else {
             loginButton.style.display = 'inline-block'; // Show login button

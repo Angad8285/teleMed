@@ -96,12 +96,6 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
 
         localStorage.setItem('role', role)
-        // try {
-        //     const decodedToken = jwt_decode(token) // Decode the token
-        //     localStorage.setItem('role', decodedToken.role)
-        // } catch (error) {
-        //     console.error('Error decoding token:', error.message)
-        // }
 
         // Redirect to the homepage or another secure page
         window.location.href = 'index.html';

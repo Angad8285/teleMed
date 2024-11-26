@@ -118,14 +118,14 @@ function filterMedicines() {
 
 function checkLoginStatus() {
     fetchLoginStatus().then(isLoggedIn => {
-
-
         const loginButton = document.getElementById('loginButton');
         const userIcon = document.getElementById('userIcon');
+        const pendingButton = document.getElementById('pendingButton');
 
         if (isLoggedIn) {
             loginButton.style.display = 'none'; // Hide login button
             userIcon.style.display = 'inline-block'; // Show user icon
+            pendingButton.style.display = 'inline-block'; // Show user icon
             fetchAndStoreUserData(); // Fetch and store user details when logged in
         } else {
             loginButton.style.display = 'inline-block'; // Show login button
@@ -209,8 +209,8 @@ function logOutUser() {
     userData = null;
     document.getElementById('userModal').style.display = 'none';
 
-    // Optionally, update the connect button visibility
-    // document.getElementById('connectButton').style.display = 'none';
+    // Optionally, update the pending button visibility
+    // document.getElementById('pendingButton').style.display = 'none';
 
     localStorage.clear();
     window.location.href = "index.html";

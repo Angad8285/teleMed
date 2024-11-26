@@ -7,8 +7,8 @@ const convertToIST = (utcDate) => {
     return new Date(utcDate.getTime() + ISTOffset);
 }
 
-// Combined endpoint to fetch consultations for a user or doctor
-router.get('/consultations', async (req, res) => {
+// Combined endpoint to fetch pending consultations for a user or doctor
+router.get('/consultations/pending', async (req, res) => {
     const { userId, doctorId } = req.query;
 
     try {
@@ -39,6 +39,48 @@ router.get('/consultations', async (req, res) => {
         res.status(200).send({ consultations: consultationsIST });
     } catch (e) {
         res.status(400).send({ error: 'Failed to fetch consultations', details: e.message });
+    }
+});
+
+// get previous consultations
+router.get('/consultations/previous', async (req, res) => {
+    const { userId } = req.query;
+
+    try {
+        // Validate that userId is provided
+        if (!userId) {
+            return res.status(400).send({
+                error: 'userId is required to fetch previous consultations.',
+            });
+        }
+
+        // Build query to fetch consultations before the current time
+        const query = {
+            userId,
+            time: { $lt: new Date() }, // Fetch consultations scheduled in the past
+        };
+
+        // Fetch previous consultations
+        const previousConsultations = await Consultation.find(query, 'time _id')
+            .sort({ time: -1 }) // Sort by time in descending order
+            .exec();
+
+        // Convert consultation times to IST
+        const consultationsWithIST = previousConsultations.map((consultation) => ({
+            consultationId: consultation._id,
+            consultationTime: convertToIST(consultation.time),
+        }));
+
+        // Send response
+        res.status(200).send({
+            previousConsultations: consultationsWithIST,
+        });
+    } catch (error) {
+        console.error('Error fetching previous consultations:', error.message);
+        res.status(500).send({
+            error: 'Failed to fetch previous consultations.',
+            details: error.message,
+        });
     }
 });
 
