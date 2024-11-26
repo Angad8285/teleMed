@@ -1,5 +1,5 @@
 class User {
-    constructor(name, phone, email) {
+    constructor(name, phone, email, role) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -14,7 +14,7 @@ class User {
                 const userData = {
                     "name": data.name,
                     "phone": data.phone,
-                    "email": data.email
+                    "email": data.email,
                 }
                 resolve(userData); // Resolves with the hardcoded test data
             }, 100); // Simulate a quick API delay
@@ -23,13 +23,13 @@ class User {
 }
 
 // Hardcoded test data (to simulate user data)
-let testUserData = {
-    username: 'john_doe',
-    name: 'John Doe',
-    phone: '123-456-7890',
-    email: 'johndoe@example.com',
-    gender: 'Male'
-};
+// let testUserData = {
+//     username: 'john_doe',
+//     name: 'John Doe',
+//     phone: '123-456-7890',
+//     email: 'johndoe@example.com',
+//     gender: 'Male'
+// };
 
 // List of medicines (simulating data you might fetch from a backend)
 const medicines = [
@@ -120,7 +120,10 @@ function checkLoginStatus() {
     fetchLoginStatus().then(isLoggedIn => {
         const loginButton = document.getElementById('loginButton');
         const userIcon = document.getElementById('userIcon');
+        const consultButton = document.getElementById('consultButton');
         const pendingButton = document.getElementById('pendingButton');
+
+        const role = localStorage.getItem('role')
 
         if (isLoggedIn) {
             loginButton.style.display = 'none'; // Hide login button
@@ -130,6 +133,9 @@ function checkLoginStatus() {
         } else {
             loginButton.style.display = 'inline-block'; // Show login button
             userIcon.style.display = 'none'; // Hide user icon
+        }
+        if (role == 'doctor') {
+            consultButton.style.display = 'none';
         }
     });
 }

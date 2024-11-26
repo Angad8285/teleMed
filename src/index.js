@@ -43,7 +43,9 @@ io.on('connection', (socket) => {
       //verify and decode the token
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       const { role, _id } = decoded
-      socket.join(consultationId)
+      if (consultationId != null) {
+        socket.join(consultationId)
+      }
 
       //send role back to client
       callback({ role })

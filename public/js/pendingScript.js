@@ -122,6 +122,9 @@ function checkLoginStatus() {
 
         const loginButton = document.getElementById('loginButton');
         const userIcon = document.getElementById('userIcon');
+        const consultButton = document.getElementById('consultButton');
+
+        const role = localStorage.getItem('role')
 
         if (isLoggedIn) {
             loginButton.style.display = 'none'; // Hide login button
@@ -130,6 +133,9 @@ function checkLoginStatus() {
         } else {
             loginButton.style.display = 'inline-block'; // Show login button
             userIcon.style.display = 'none'; // Hide user icon
+        }
+        if (role == 'doctor') {
+            consultButton.style.display = 'none';
         }
     });
 }
