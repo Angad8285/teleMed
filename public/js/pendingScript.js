@@ -232,12 +232,58 @@ document.getElementById('userIcon').addEventListener('click', showUserDetails);
 
 
 // Simulate fetching data (replace this with an actual API call)
-function fetchConsultData() {
+async function fetchConsultData() {
     return new Promise((resolve) => {
-        setTimeout(() => {
-            const ids = ['ID001', 'ID002', 'ID003', 'ID004'];
-            const times = ['2024-11-26 10:00 AM', '2024-11-26 11:30 AM', '2024-11-26 12:45 PM', '2024-11-26 02:15 PM'];
-            resolve({ ids, times });
+        setTimeout(async () => {
+
+            // pendingConsultations = [
+            //     {
+            //         "id": "6745f75222c7a75f050bd739",
+            //         "time": "2024-11-27T21:00:00.000Z"
+            //     },
+            //     {
+            //         "id": "6745f75e22c7a75f050bd764",
+            //         "time": "2024-11-27T22:00:00.000Z"
+            //     }
+            // ]
+
+            const role = localStorage.getItem('role')
+            var userId = ''
+            var doctorId = ''
+
+            try {
+                if (role == 'patient') {
+                    userId = JSON.parse(localStorage.getItem('userDetails'))._id
+                }
+                else if (role == 'doctor') {
+                    doctorId = JSON.parse(localStorage.getItem('userDetails'))._id
+                }
+
+                const params = new URLSearchParams({
+                    userId,
+                    doctorId
+                }).toString();
+
+                const endpoint = `http://localhost:3000/consultations/pending?${params}`
+
+                const response = await fetch(endpoint, {
+                    method: 'GET', // Change to POST if using req.body on the server
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                const pendingConsultations = data.consultations
+                resolve({ pendingConsultations });
+
+            } catch (e) {
+                console.log(e)
+            }
         }, 1000); // Simulate delay
     });
 }
@@ -245,13 +291,14 @@ function fetchConsultData() {
 function populateConsultTable() {
     const tableBody = document.querySelector('#consultTable tbody');
 
-    fetchConsultData().then(({ ids, times }) => {
+    fetchConsultData().then(({ pendingConsultations }) => {
         // Clear existing rows
         tableBody.innerHTML = '';
 
         // Populate table rows
-        ids.forEach((id, index) => {
-            const time = times[index];
+        pendingConsultations.forEach((consultation) => {
+            const time = consultation.time.split('T')[1].split(':').slice(0, 2).join(':');
+            const id = consultation.id
 
             const row = document.createElement('tr');
             row.innerHTML = `
