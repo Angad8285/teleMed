@@ -12,7 +12,7 @@ document.getElementById('toggleButton').addEventListener('click', function () {
         signupForm.style.display = 'block';
         formHeader.textContent = 'Sign Up';
         toggleButton.textContent = 'Login';
-        toggleText.textContent = 'Already have an account? ';
+        toggleText.textContent = 'Already have an account?';
     } else {
         // Show login form and hide sign-up form
         signupForm.style.display = 'none';
@@ -24,7 +24,7 @@ document.getElementById('toggleButton').addEventListener('click', function () {
 });
 
 // Handle userType selection and dynamically show/hide specialty list
-document.getElementById('userType').addEventListener('change', function () {
+document.getElementById('submitUserType').addEventListener('change', function () {
     const userType = this.value;
     const specialtySection = document.getElementById('specialtySection');
 
@@ -116,12 +116,13 @@ document.getElementById('signupForm').addEventListener('submit', function (event
     const confirmPassword = document.getElementById('confirmPassword').value;
     const phoneNumber = document.getElementById('phoneNumber').value;
     const age = document.getElementById('Age').value;
-    const userType = document.getElementById('userType').value;
+    const userType = document.getElementById('submitUserType').value;
     const gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '';
     const specialty = document.querySelector('input[name="specialty"]:checked') ? document.querySelector('input[name="specialty"]:checked').value : '';
     const startTime = document.querySelector('input[name="startTime"]:checked') ? document.querySelector('input[name="startTime"]:checked').value : '';
     const endTime = document.querySelector('input[name="endTime"]:checked') ? document.querySelector('input[name="endTime"]:checked').value : '';
 
+    console.log(email)
     // Validate that the passwords match
     if (newPassword !== confirmPassword) {
         document.getElementById('errorMessage').textContent = "Passwords do not match.";
@@ -136,5 +137,5 @@ document.getElementById('signupForm').addEventListener('submit', function (event
 
     // Simulate sign-up (this should be replaced by sending data to the server)
     console.log("Sign-Up Successful for:", newUsername, userType, specialty);
-    window.location.href = "index.html"; // Redirect to homepage
+    // window.location.href = "index.html"; // Redirect to homepage
 });
