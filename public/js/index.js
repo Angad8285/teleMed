@@ -1,7 +1,6 @@
 class User {
-    constructor(username, fullName, phone, email) {
-        this.username = username;
-        this.fullName = fullName;
+    constructor(name, phone, email) {
+        this.name = name;
         this.phone = phone;
         this.email = email;
     }
@@ -11,7 +10,13 @@ class User {
         // Return user data from the testUserData object
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve(testUserData); // Resolves with the hardcoded test data
+                const data = JSON.parse(localStorage.getItem('userDetails'))
+                const userData = {
+                    "name": data.name,
+                    "phone": data.phone,
+                    "email": data.email
+                }
+                resolve(userData); // Resolves with the hardcoded test data
             }, 100); // Simulate a quick API delay
         });
     }
@@ -20,9 +25,10 @@ class User {
 // Hardcoded test data (to simulate user data)
 let testUserData = {
     username: 'john_doe',
-    fullName: 'John Doe',
+    name: 'John Doe',
     phone: '123-456-7890',
-    email: 'johndoe@example.com'
+    email: 'johndoe@example.com',
+    gender: 'Male'
 };
 
 // List of medicines (simulating data you might fetch from a backend)
@@ -36,6 +42,31 @@ const medicines = [
     { name: 'Omeprazole', description: 'Used to treat acid reflux and stomach ulcers.', price: '$10.50' },
     { name: 'Loratadine', description: 'Used for relief from allergy symptoms like runny nose and sneezing.', price: '$6.00' }
 ];
+
+document.querySelector('.navbar-item.consult').addEventListener('click', function (event) {
+    event.preventDefault(); // Prevent default link behavior
+    handleConsultClick();
+});
+
+function handleConsultClick() {
+    fetchLoginStatus().then(isLoggedIn => {
+        if (!isLoggedIn) {
+            // Redirect to homepage if not logged in
+            window.location.href = "login.html";
+        } else {
+            // Proceed to the consult page if logged in
+            window.location.href = "consult.html";
+        }
+    });
+}
+
+function fetchLoginStatus() {
+    return new Promise((resolve) => {
+        // Check localStorage for the login flag
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        resolve(isLoggedIn);
+    });
+}
 
 // Function to display medicines in the results
 function displayMedicines(filteredMedicines) {
@@ -75,18 +106,20 @@ function filterMedicines() {
 // displayMedicines(medicines);
 
 
-// Simulate login status
-function fetchLoginStatus() {
-    return new Promise((resolve) => {
-        // Simulate login status (set to true for logged-in)
-        setTimeout(() => {
-            resolve(false); // Change to `false` for logged out status
-        }, 500); // A very short delay to simulate fetching login status
-    });
-}
+// // Simulate login status
+// function fetchLoginStatus() {
+//     return new Promise((resolve) => {
+//         // Simulate login status (set to true for logged-in)
+//         setTimeout(() => {
+//             resolve(false); // Change to `false` for logged out status
+//         }, 500); // A very short delay to simulate fetching login status
+//     });
+// }
 
 function checkLoginStatus() {
     fetchLoginStatus().then(isLoggedIn => {
+
+
         const loginButton = document.getElementById('loginButton');
         const userIcon = document.getElementById('userIcon');
 
@@ -112,17 +145,78 @@ function fetchAndStoreUserData() {
 
 function showUserDetails() {
     if (userData) {
-        document.getElementById('username').textContent = userData.username;
-        document.getElementById('fullName').textContent = userData.fullName;
+        document.getElementById('name').textContent = userData.name;
         document.getElementById('phone').textContent = userData.phone;
         document.getElementById('email').textContent = userData.email;
+
+        // if (userData.consult != '') {
+        //     document.getElementById('consultText').textContent = userData.consult;
+        // } else {
+        //     document.getElementById('consultText').textContent = 'No pending Consultation';
+        // }
+
+        // Create a Log Out button if it doesn't already exist
+        let logoutButton = document.getElementById('logoutButton');
+        if (!logoutButton) {
+            logoutButton = document.createElement('button');
+            logoutButton.id = 'logoutButton';
+            logoutButton.textContent = 'Log Out';
+            logoutButton.style.display = 'block';
+            logoutButton.style.margin = '30px auto'; // Centers the button
+            logoutButton.style.padding = '15px 30px';
+            logoutButton.style.backgroundColor = '#ff4d4d';
+            logoutButton.style.color = '#ffffff';
+            logoutButton.style.border = 'none';
+            logoutButton.style.borderRadius = '10px'; // Slightly rounded corners
+            logoutButton.style.fontSize = '18px';
+            logoutButton.style.fontWeight = 'bold';
+            logoutButton.style.cursor = 'pointer';
+            logoutButton.style.width = '50%';
+
+            logoutButton.addEventListener('mouseover', () => {
+                logoutButton.style.backgroundColor = '#ff6666'; // Lighter red
+                logoutButton.style.transform = 'scale(1.05)'; // Slightly larger
+            });
+            logoutButton.addEventListener('mouseout', () => {
+                logoutButton.style.backgroundColor = '#ff4d4d'; // Original red
+                logoutButton.style.transform = 'scale(1)'; // Reset size
+            });
+
+
+            // Add click event to handle log out
+            logoutButton.addEventListener('click', logOutUser);
+
+            // Append the button to the modal
+            const modalContent = document.querySelector('#userModal .modal-content');
+            modalContent.appendChild(logoutButton);
+        }
 
         // Show modal immediately
         document.getElementById('userModal').style.display = 'block';
     }
 }
 
-window.onclick = function(event) {
+// Function to handle user log out
+function logOutUser() {
+    // Perform log-out logic (e.g., clear session, reset UI)
+    console.log("User logged out!");
+
+    // Hide user icon and show login button
+    document.getElementById('userIcon').style.display = 'none';
+    document.getElementById('loginButton').style.display = 'inline-block';
+
+    // Clear user data and close the modal
+    userData = null;
+    document.getElementById('userModal').style.display = 'none';
+
+    // Optionally, update the connect button visibility
+    // document.getElementById('connectButton').style.display = 'none';
+
+    localStorage.clear();
+    window.location.href = "index.html";
+}
+
+window.onclick = function (event) {
     const modal = document.getElementById('userModal');
     if (event.target === modal) {
         modal.style.display = 'none';

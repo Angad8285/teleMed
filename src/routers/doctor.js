@@ -55,22 +55,32 @@ router.post('/doctors/logout', doctorAuth, async (req, res) => {
 })
 
 // Route to get doctors by name and/or specialization
-router.get('/doctors/speciality', async (req, res) => {
-    const { name, speciality } = req.body;
+router.get('/doctors/search', async (req, res) => {
+    const { name, specialization } = req.query;
 
     try {
         // Dynamically construct the query object
         const query = {};
-        if (name) query.name = { $regex: new RegExp(name, 'i') }; // Case-insensitive search for name
-        if (speciality) query.specialization = { $regex: new RegExp(speciality, 'i') }; // Case-insensitive search for specialization
+
+        // Add filters only if they have meaningful values
+        if (name && name.trim() !== '') {
+            query.name = { $regex: new RegExp(name, 'i') }; // Case-insensitive search for name
+        }
+        if (specialization && specialization.trim() !== '') {
+            query.specialization = { $regex: new RegExp(specialization, 'i') }; // Case-insensitive search for specialization
+        }
 
         // Fetch doctors based on the query
         const doctors = await Doctor.find(query);
+
+        // Send the filtered list
         res.status(200).send({ doctors });
     } catch (e) {
         res.status(400).send({ error: 'Failed to fetch doctors', details: e.message });
     }
 });
+
+
 
 
 //route to get available slots for a doctor

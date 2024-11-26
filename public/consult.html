@@ -33,10 +33,10 @@
         <h1>Consult Doctors</h1>
         <div class="search-container">
             <!-- Search bar -->
-            <input type="text" id="searchBar" placeholder="Search doctors" onkeyup="filterDoctors()">
+            <input type="text" id="searchBar" placeholder="Search doctors">
 
             <!-- Dropdown for doctor type -->
-            <select id="specialtySelect" onchange="filterDoctors()">
+            <select id="specialtySelect">
                 <option value="">Select Specialty</option>
                 <option value="Cardiologist">Cardiologist</option>
                 <option value="Dermatologist">Dermatologist</option>
@@ -63,16 +63,15 @@
         <div class="popup-content">
             <span class="close-popup" id="closeDoctorPopup">&times;</span>
             <div class="doctor-header">
-                <img id="doctorImage" src="" alt="Doctor Image" class="doctor-image">
                 <div>
                     <h3 id="doctorName"></h3>
                     <p id="doctorSpecialty"></p>
-                    <p id="doctorDescription"></p>
+                    <!-- <p id="doctorDescription"></p> -->
                 </div>
             </div>
-            <label for="appointmentTime">Choose Appointment Time:</label>
+            <!-- <label for="appointmentTime">Choose Appointment Time:</label>
             <select id="appointmentTime"></select>
-            <button id="bookAppointment">Book Appointment</button>
+            <button id="bookAppointment">Book Appointment</button> -->
         </div>
     </div>
 
@@ -80,8 +79,7 @@
     <div id="userModal" class="modal" style="display:none;">
         <div class="modal-content">
             <h2>User Details</h2>
-            <p><strong>Username:</strong> <span id="username"></span></p>
-            <p><strong>Full Name:</strong> <span id="fullName"></span></p>
+            <p><strong>Full Name:</strong> <span id="name"></span></p>
             <p><strong>Phone:</strong> <span id="phone"></span></p>
             <p><strong>Email:</strong> <span id="email"></span></p>
         </div>

@@ -6,7 +6,7 @@ require('./db/mongoose')
 require('dotenv').config({ path: './config/dev.env' })
 const userRouter = require("./routers/user")
 const doctorRouter = require("./routers/doctor")
-const chatRouter = require("./routers/chat")
+const consultationRouter = require("./routers/consultation")
 const medicineRouter = require("./routers/medicine")
 const jwt = require('jsonwebtoken')
 const cors = require('cors');
@@ -29,7 +29,7 @@ const port = process.env.PORT || 3000
 app.use(express.json());
 app.use(userRouter)
 app.use(doctorRouter)
-app.use(chatRouter)
+app.use(consultationRouter)
 app.use(medicineRouter)
 
 //socket.io connection event

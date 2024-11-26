@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="css/login.css">
 </head>
+
 <body>
     <!-- Navbar -->
     <div class="navbar">
@@ -21,8 +23,16 @@
         <h1 id="formHeader">Login</h1>
         <form id="loginForm" class="form">
             <div class="form-group">
-                <label for="username">E-mail</label>
-                <input type="text" id="username" name="username" placeholder="Enter your e-mail" required>
+                <label for="userType">Are you a patient or doctor?</label>
+                <select id="userType" name="userType" required>
+                    <option value="">Select</option>
+                    <option value="patient">Patient</option>
+                    <option value="doctor">Doctor</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="text" id="email" name="email" placeholder="Enter your e-mail" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -35,6 +45,10 @@
         <!-- Sign Up Form (hidden initially) -->
         <form id="signupForm" class="form" style="display: none;">
             <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="text" id="email" name="email" placeholder="E-mail" required>
+            </div>
+            <div class="form-group">
                 <label for="newUsername">Username</label>
                 <input type="text" id="newUsername" name="newUsername" placeholder="Create a username" required>
             </div>
@@ -44,7 +58,8 @@
             </div>
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password"
+                    required>
             </div>
             <div class="form-group">
                 <label for="Age">Age</label>
@@ -53,6 +68,14 @@
             <div class="form-group">
                 <label for="phoneNumber">Phone Number</label>
                 <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select</option>
+                    <option value="patient">Male</option>
+                    <option value="doctor">Female</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="userType">Are you a patient or doctor?</label>
@@ -68,13 +91,23 @@
                 <label for="specialty">Choose Your Specialty</label>
                 <select id="specialty" name="specialty">
                     <option value="">Select a Specialty</option>
-                    <option value="Cardiology">Cardiology</option>
-                    <option value="Neurology">Neurology</option>
-                    <option value="Orthopedics">Orthopedics</option>
-                    <option value="Pediatrics">Pediatrics</option>
-                    <option value="General Surgery">General Surgery</option>
+                    <option value="Cardiologist">Cardiologist</option>
+                    <option value="Dermatologist">Dermatologist</option>
+                    <option value="Pediatrician">Pediatrician</option>
+                    <option value="Neurologist">Neurologist</option>
+                    <option value="Orthopedic">Orthopedic</option>
+                    <option value="Dentist">Dentist</option>
                     <!-- Add more specialties as needed -->
                 </select>
+                <label for="Availability">Availability</label>
+                <div class="form-group">
+                    <label for="startTime">Start Number</label>
+                    <input type="text" id="startTime" name="startTime" placeholder="Enter your start number" required>
+                </div>
+                <div class="form-group">
+                    <label for="endTime">End Number</label>
+                    <input type="text" id="endTime" name="endTime" placeholder="Enter your end number" required>
+                </div>
             </div>
 
             <button type="submit" class="signup-button">Sign Up</button>
@@ -83,8 +116,8 @@
         <!-- Toggle Button -->
         <div class="toggle-section">
             <button class="toggle-button" id="toggleButton">Don't have an account? Sign up</button>
-        </div>        
-        
+        </div>
+
         <p class="error-message" id="errorMessage"></p>
     </div>
 
@@ -94,6 +127,8 @@
         <p>Created with ❤️ by Your Name</p>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
     <script src="js/login.js"></script>
 </body>
+
 </html>
