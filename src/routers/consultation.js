@@ -1,5 +1,6 @@
 const express = require('express');
 const Consultation = require('../models/consultation');
+const Doctor = require('../models/doctor')
 const router = new express.Router();
 
 const convertToIST = (utcDate) => {
@@ -61,15 +62,21 @@ router.get('/consultations/previous', async (req, res) => {
         };
 
         // Fetch previous consultations
-        const previousConsultations = await Consultation.find(query, 'time _id')
+        const previousConsultations = await Consultation.find(query, 'time _id doctorId')
             .sort({ time: -1 }) // Sort by time in descending order
             .exec();
 
         // Convert consultation times to IST
-        const consultationsWithIST = previousConsultations.map((consultation) => ({
-            consultationId: consultation._id,
-            consultationTime: convertToIST(consultation.time),
-        }));
+        const consultationsWithIST = await Promise.all(
+            previousConsultations.map(async (consultation) => {
+                const doctor = await Doctor.findOne({ _id: consultation.doctorId }, 'name').exec();
+                return {
+                    doctorName: doctor ? doctor.name : 'Unknown Doctor',
+                    consultationId: consultation._id,
+                    consultationTime: convertToIST(consultation.time),
+                };
+            })
+        );
 
         // Send response
         res.status(200).send({

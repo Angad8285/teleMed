@@ -249,9 +249,7 @@ function showPreviousConsultations() {
         const li = document.createElement('li');
         li.innerHTML = `
             <h4>${consultation.doctor}</h4>
-            <p>Specialty: ${consultation.specialty}</p>
             <p>Date: ${consultation.date}</p>
-            <p>Fee: ${consultation.fee}</p>
         `;
         consultationsList.appendChild(li);
     });
