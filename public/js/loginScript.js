@@ -57,7 +57,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
         // Send login request to the backend
         let response
         if (role == 'patient') {
-            response = await fetch('http://localhost:3000/users/login', {
+            response = await fetch('https://telemed-9lml.onrender.com/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
             localStorage.setItem('userDetails', JSON.stringify(user));
         }
         else if (role == 'doctor') {
-            response = await fetch('http://localhost:3000/doctors/login', {
+            response = await fetch('https://telemed-9lml.onrender.com/doctors/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -155,7 +155,7 @@ document.getElementById('signupForm').addEventListener('submit', async function 
         // Send login request to the backend
         var response
         if (userType == 'patient') {
-            response = await fetch('http://localhost:3000/users', {
+            response = await fetch('https://telemed-9lml.onrender.com/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -181,7 +181,7 @@ document.getElementById('signupForm').addEventListener('submit', async function 
         }
         else if (userType == 'doctor') {
 
-            response = await fetch('http://localhost:3000/doctors', {
+            response = await fetch('https://telemed-9lml.onrender.com/doctors', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

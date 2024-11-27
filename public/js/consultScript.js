@@ -331,7 +331,7 @@ async function displayConsultations() {
             userId
         }).toString();
 
-        const endpoint = `http://localhost:3000/consultations/previous?${params}`
+        const endpoint = `https://telemed-9lml.onrender.com/consultations/previous?${params}`
 
         const response = await fetch(endpoint, {
             method: 'GET', // Change to POST if using req.body on the server
@@ -438,7 +438,7 @@ async function filterDoctors() {
         }).toString();
 
         // API endpoint with query parameters
-        const endpoint = `http://localhost:3000/doctors/search?${params}`;
+        const endpoint = `https://telemed-9lml.onrender.com/doctors/search?${params}`;
 
         // Fetch data from the API
         const response = await fetch(endpoint, {
@@ -484,7 +484,7 @@ async function openDoctorPopup(doctor) {
             doctorId: doctor._id
         }).toString()
 
-        const endpoint = `http://localhost:3000/doctors/available-slots?${params}`
+        const endpoint = `https://telemed-9lml.onrender.com/doctors/available-slots?${params}`
 
         const response = await fetch(endpoint, {
             method: 'GET', // Change to POST if using req.body on the server
@@ -548,7 +548,7 @@ async function bookAppointment(doctorId) {
 
     try {
         // Prepare the API request
-        const endpoint = `http://localhost:3000/users/${doctorId}/consultations`;
+        const endpoint = `https://telemed-9lml.onrender.com/users/${doctorId}/consultations`;
 
         const response = await fetch(endpoint, {
             method: 'POST',

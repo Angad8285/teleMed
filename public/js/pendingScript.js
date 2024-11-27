@@ -270,7 +270,7 @@ async function fetchConsultData() {
                     doctorId
                 }).toString();
 
-                const endpoint = `http://localhost:3000/consultations/pending?${params}`
+                const endpoint = `https://telemed-9lml.onrender.com/consultations/pending?${params}`
 
                 const response = await fetch(endpoint, {
                     method: 'GET', // Change to POST if using req.body on the server

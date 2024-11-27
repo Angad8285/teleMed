@@ -96,7 +96,7 @@ async function filterMedicines() {
 
     try {
         // Call the medicine search endpoint
-        const response = await fetch(`http://localhost:3000/medicine/search?product_name=${searchQuery}`, {
+        const response = await fetch(`https://telemed-9lml.onrender.com/medicine/search?product_name=${searchQuery}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -230,7 +230,7 @@ async function logOutUser() {
 
     try {
         if (role == 'patient') {
-            const endpoint = `http://localhost:3000/users/logout`;
+            const endpoint = `https://telemed-9lml.onrender.com/users/logout`;
 
             response = await fetch(endpoint, {
                 method: 'POST',
@@ -241,7 +241,7 @@ async function logOutUser() {
             });
         }
         else if (role == 'doctor') {
-            const endpoint = `http://localhost:3000/doctors/logout`;
+            const endpoint = `https://telemed-9lml.onrender.com/doctors/logout`;
 
             response = await fetch(endpoint, {
                 method: 'POST',

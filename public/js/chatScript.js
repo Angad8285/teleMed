@@ -1,4 +1,4 @@
-const socket = io('http://localhost:3000', {
+const socket = io('https://telemed-9lml.onrender.com', {
     transports: ["websocket", "polling"]
 })
 
@@ -37,7 +37,7 @@ if (consultationId != null) {
         socket.emit('sendMessage', { consultationId, sender: user, content: message })
 
         //save the message to the room via socket.io
-        const BASE_URL = 'http://localhost:3000'
+        const BASE_URL = 'https://telemed-9lml.onrender.com'
 
         try {
             await fetch(`${BASE_URL}/chats/${consultationId}/messages`, {
