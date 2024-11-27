@@ -77,30 +77,49 @@ function displayMedicines(filteredMedicines) {
         const card = document.createElement('div');
         card.classList.add('card');
         card.innerHTML = `
-            <h3>${medicine.name}</h3>
-            <p>${medicine.description}</p>
-            <p class="price">${medicine.price}</p>
+            <h3>${medicine.product_name}</h3>
+            <p class="price">${medicine.product_price}</p>
         `;
         resultContainer.appendChild(card);
     });
 }
 
 // Function to filter medicines based on search input
-function filterMedicines() {
-    const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+async function filterMedicines() {
+    const searchQuery = document.getElementById('searchBar').value.trim().toLowerCase();
 
+    // Clear the display if the search query is empty
     if (searchQuery === "") {
-        displayMedicines([])
+        displayMedicines([]); // Display empty results
         return;
     }
 
-    // Filter medicines based on the name or description matching the search query
-    const filteredMedicines = medicines.filter(medicine => {
-        return medicine.name.toLowerCase().includes(searchQuery) || medicine.description.toLowerCase().includes(searchQuery);
-    });
+    try {
+        // Call the medicine search endpoint
+        const response = await fetch(`http://localhost:3000/medicine/search?product_name=${searchQuery}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    displayMedicines(filteredMedicines);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        // Parse the results from the API response
+        const filteredMedicines = await response.json();
+
+        // Pass the filtered medicines to the display function
+        displayMedicines(filteredMedicines);
+    } catch (error) {
+        console.error("Failed to fetch medicines:", error);
+
+        // Optionally, show an error message to the user
+        alert("Medicine not found. Please try again.");
+    }
 }
+
 
 // Initially display all medicines
 // displayMedicines(medicines);
@@ -203,23 +222,60 @@ function showUserDetails() {
 }
 
 // Function to handle user log out
-function logOutUser() {
+async function logOutUser() {
     // Perform log-out logic (e.g., clear session, reset UI)
-    console.log("User logged out!");
+    const role = localStorage.getItem('role')
+    const authToken = localStorage.getItem('authToken')
+    var response
 
-    // Hide user icon and show login button
-    document.getElementById('userIcon').style.display = 'none';
-    document.getElementById('loginButton').style.display = 'inline-block';
+    try {
+        if (role == 'patient') {
+            const endpoint = `http://localhost:3000/users/logout`;
 
-    // Clear user data and close the modal
-    userData = null;
-    document.getElementById('userModal').style.display = 'none';
+            response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${authToken}`,
+                }
+            });
+        }
+        else if (role == 'doctor') {
+            const endpoint = `http://localhost:3000/doctors/logout`;
 
-    // Optionally, update the pending button visibility
-    // document.getElementById('pendingButton').style.display = 'none';
+            response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${authToken}`,
+                }
+            });
+        }
 
-    localStorage.clear();
-    window.location.href = "index.html";
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message);
+        }
+
+        console.log("User logged out!");
+
+        // Hide user icon and show login button
+        document.getElementById('userIcon').style.display = 'none';
+        document.getElementById('loginButton').style.display = 'inline-block';
+
+        // Clear user data and close the modal
+        userData = null;
+        document.getElementById('userModal').style.display = 'none';
+
+        // Optionally, update the pending button visibility
+        // document.getElementById('pendingButton').style.display = 'none';
+
+        localStorage.clear();
+        window.location.href = "index.html";
+
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 window.onclick = function (event) {

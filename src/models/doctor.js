@@ -51,7 +51,7 @@ const doctorSchema = new mongoose.Schema({
     },
     availability: {
         start_time: String,
-        end_time: String
+        end_time: String,
     },
     consultations: [{
         type: mongoose.Schema.Types.ObjectId,
